@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)https://rodger.global-linguist.com/webgl/ch02/HelloCanvas.html -->
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Clear "canvas"</title>
+  </head>
+
+  <body onload="main()">
+    <canvas id="webgl" width="400" height="400">
+      Please use a browser that supports "canvas"
+    </canvas>
+
+    <br /><br />
+
+    v1: x
+    <input id="v1x" type="number" value="2.25" />
+    v1: y
+    <input id="v1y" type="number" value="2.25" />
+
+    <br /><br />
+
+    v2: x
+    <input id="v2x" type="number" value="1" />
+    v2: y
+    <input id="v2y" type="number" value="0" />
+
+    <br /><br />
+    <button onclick="handleDrawEvent()">Draw</button>
+    <br /><br />
+
+    Operation:
+    <select id="operation">
+      <option value="add">Add</option>
+      <option value="sub">Sub</option>
+      <option value="mul">Mul</option>
+      <option value="div">Div</option>
+      <option value="mag">Magnitude</option>
+      <option value="norm">Normalize</option>
+      <option value="angle">Angle between</option>
+      <option value="area">Area</option>
+    </select>
+
+    <br /><br />
+
+    Scalar:
+    <input id="scalar" type="number" value="2" />
+
+    <br /><br />
+
+    <button onclick="handleDrawOperationEvent()">Draw</button>
+
+    <script src="./asgn0_files/webgl-utils.js.download"></script>
+    <script src="./asgn0_files/webgl-debug.js.download"></script>
+    <script src="./asgn0_files/cuon-utils.js.download"></script>
+    <script src="./asgn0_files/HelloCanvas.js.download"></script>
+    <script src="./lib/cuon-matrix-cse160.js"></script>
+  </body>
+</html>
