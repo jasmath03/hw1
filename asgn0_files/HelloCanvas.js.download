@@ -1,0 +1,145 @@
+function main() {
+    const canvas = document.getElementById("webgl");
+    const ctx = canvas.getContext("2d");
+
+    // Clear canvas to black
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Initial vector v1
+    const v1 = new Vector3([2.25, 2.25, 0]);
+    drawVector(v1, "red");
+}
+
+function drawVector(v, color) {
+    const canvas = document.getElementById("webgl");
+    const ctx = canvas.getContext("2d");
+
+    ctx.strokeStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(200, 200);
+    ctx.lineTo(
+        200 + v.elements[0] * 20,
+        200 - v.elements[1] * 20
+    );
+    ctx.stroke();
+}
+
+function handleDrawEvent() {
+    const canvas = document.getElementById("webgl");
+    const ctx = canvas.getContext("2d");
+
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const v1x = parseFloat(document.getElementById("v1x").value);
+    const v1y = parseFloat(document.getElementById("v1y").value);
+    const v2x = parseFloat(document.getElementById("v2x").value);
+    const v2y = parseFloat(document.getElementById("v2y").value);
+
+    const v1 = new Vector3([v1x, v1y, 0]);
+    const v2 = new Vector3([v2x, v2y, 0]);
+
+    drawVector(v1, "red");
+    drawVector(v2, "blue");
+}
+
+function handleDrawOperationEvent() {
+    const canvas = document.getElementById("webgl");
+    const ctx = canvas.getContext("2d");
+
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const v1x = parseFloat(document.getElementById("v1x").value);
+    const v1y = parseFloat(document.getElementById("v1y").value);
+    const v2x = parseFloat(document.getElementById("v2x").value);
+    const v2y = parseFloat(document.getElementById("v2y").value);
+    const scalar = parseFloat(document.getElementById("scalar").value);
+    const operation = document.getElementById("operation").value;
+
+    const v1 = new Vector3([v1x, v1y, 0]);
+    const v2 = new Vector3([v2x, v2y, 0]);
+
+    drawVector(v1, "red");
+    drawVector(v2, "blue");
+
+    switch (operation) {
+        case "add": {
+            const v3 = new Vector3([v1x, v1y, 0]).add(v2);
+            drawVector(v3, "green");
+            break;
+        }
+
+        case "sub": {
+            const v3 = new Vector3([v1x, v1y, 0]).sub(v2);
+            drawVector(v3, "green");
+            break;
+        }
+
+        case "mul": {
+            const v3 = new Vector3([v1x, v1y, 0]).mul(scalar);
+            const v4 = new Vector3([v2x, v2y, 0]).mul(scalar);
+            drawVector(v3, "green");
+            drawVector(v4, "green");
+            break;
+        }
+
+        case "div": {
+            const v3 = new Vector3([v1x, v1y, 0]).div(scalar);
+            const v4 = new Vector3([v2x, v2y, 0]).div(scalar);
+            drawVector(v3, "green");
+            drawVector(v4, "green");
+            break;
+        }
+
+        case "mag": {
+            console.log("Magnitude of v1:", v1.magnitude());
+            console.log("Magnitude of v2:", v2.magnitude());
+            break;
+        }
+
+        case "norm": {
+            console.log("Magnitude of v1:", v1.magnitude());
+            console.log("Magnitude of v2:", v2.magnitude());
+
+            const v1n = new Vector3([v1x, v1y, 0]).normalize();
+            const v2n = new Vector3([v2x, v2y, 0]).normalize();
+
+            drawVector(v1n, "green");
+            drawVector(v2n, "green");
+            break;
+        }
+
+        case "angle": {
+            const angle = angleBetween(v1, v2);
+            console.log("Angle between v1 and v2:", angle, "degrees");
+            break;
+        }
+
+        case "area": {
+            const area = areaTriangle(v1, v2);
+            console.log("Area of triangle:", area);
+            break;
+        }
+
+        default:
+            alert("Unknown operation");
+    }
+}
+
+function angleBetween(v1, v2) {
+    const dot = Vector3.dot(v1, v2);
+    const mag1 = v1.magnitude();
+    const mag2 = v2.magnitude();
+
+    const cosTheta = dot / (mag1 * mag2);
+    const angleRad = Math.acos(cosTheta);
+
+    return angleRad * 180 / Math.PI;
+}
+
+function areaTriangle(v1, v2) {
+    const cross = Vector3.cross(v1, v2);
+    return 0.5 * cross.magnitude();
+}
